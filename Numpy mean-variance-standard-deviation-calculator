@@ -1,0 +1,54 @@
+import numpy as np
+
+def calculate(list):
+    """function that uses numpy to output the mean, variance, standard deviation, max, min, and sum of the rows,
+    columns, and elements in a 3 x 3 matrix."""
+
+    calculations = {}
+
+    if len(list) != 9:  # makes sure the input list is exactly len 9
+        raise ValueError("List must contain nine numbers.")
+
+    list_array = np.asarray(list).reshape(3, 3)  # converts the input list into a 3x3 array
+
+    _axis_0_sum = np.sum(list_array, axis=0)  # finds the sum of the array along the 0 axis
+    _axis_1_sum = np.sum(list_array, axis=1)  # finds the sum of the array along the 1 axis
+    _total_sum = np.sum(list_array)  # total sum of array
+    # adding sum k, v to calculations dict in the form of lists
+    calculations['sum'] = [_axis_0_sum.tolist(), _axis_1_sum.tolist(), _total_sum.tolist()]
+
+    _axis_0_mean = np.mean(list_array, axis=0)  # finds the mean of the array along the 0 axis
+    _axis_1_mean = np.mean(list_array, axis=1)  # finds the mean of the array along the 1 axis
+    _total_mean = np.mean(list_array)  # total mean of array
+    # adding mean k, v to calculations dict in the form of lists
+    calculations['mean'] = [_axis_0_mean.tolist(), _axis_1_mean.tolist(), _total_mean.tolist()]
+
+    _axis_0_variance = np.var(list_array, axis=0)  # finds the variance of the array along the 0 axis
+    _axis_1_variance = np.var(list_array, axis=1)  # finds the variance of the array along the 1 axis
+    _total_variance = np.var(list_array)  # total variance of array
+    # adding mean k, v to calculations dict in the form of lists
+    calculations['variance'] = [_axis_0_variance.tolist(), _axis_1_variance.tolist(), _total_variance.tolist()]
+
+    _axis_0_deviation = np.std(list_array, axis=0)  # finds the standard deviation of the array along the 0 axis
+    _axis_1_deviation = np.std(list_array, axis=1)  # finds the standard deviation of the array along the 1 axis
+    _total_deviation = np.std(list_array)  # total standard deviation of array
+    # adding standard deviation k, v to calculations dict in the form of lists
+    calculations['standard deviation'] = [_axis_0_deviation.tolist(), _axis_1_deviation.tolist(), _total_deviation.tolist()]
+
+    _axis_0_max = np.max(list_array, axis=0)  # finds the max of the array along the 0 axis
+    _axis_1_max = np.max(list_array, axis=1)  # finds the max of the array along the 1 axis
+    _total_max = np.max(list_array)  # total max of array
+    # adding max k, v to calculations dict in the form of lists
+    calculations['max'] = [_axis_0_max.tolist(), _axis_1_max.tolist(), _total_max.tolist()]
+
+    _axis_0_min = np.min(list_array, axis=0)  # finds the min of the array along the 0 axis
+    _axis_1_min = np.min(list_array, axis=1)  # finds the min of the array along the 1 axis
+    _total_min = np.min(list_array)  # total min of array
+    # adding min k, v to calculations dict in the form of lists
+    calculations['min'] = [_axis_0_min.tolist(), _axis_1_min.tolist(), _total_min.tolist()]
+
+    return calculations
+
+
+
+calculate([0,1,2,3,4,5,6,7,8])
