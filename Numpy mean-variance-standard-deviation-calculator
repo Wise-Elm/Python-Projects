@@ -1,5 +1,5 @@
 """program to fulfill project - boilerplate-mean-variance-standard-deviation-calculator - from
-freecodecamp.com"""
+course Data-Analysis-With-Python, from freecodecamp.com"""
 
 import numpy as np
 
