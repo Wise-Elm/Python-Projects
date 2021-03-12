@@ -1,3 +1,5 @@
+# coding=<UTF-8>
+
 """program to fulfill project - boilerplate-mean-variance-standard-deviation-calculator - from
 course Data-Analysis-With-Python, from freecodecamp.com"""
 
@@ -24,8 +26,9 @@ def calculate(list):
     calculations['min'] = a_min(list_array)
     calculations['max'] = a_max(list_array)
     calculations['variance'] = a_variance(list_array)
-    calculations['deviation'] = a_deviation(list_array)
+    calculations['standard deviation'] = a_deviation(list_array)
 
+    print(calculations)
     return calculations
 
 
