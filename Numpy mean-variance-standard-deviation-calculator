@@ -1,92 +1,181 @@
-# coding=<UTF-8>
+# -*- coding: utf-8 -*-
 
-"""program to fulfill project - boilerplate-mean-variance-standard-deviation-calculator - from
+"""Program to fulfill project - "boilerplate-mean-variance-standard-deviation-calculator" - from
 course Data-Analysis-With-Python, from freecodecamp.com"""
+
+from pprint import pprint
 
 import numpy as np
 
-lst_len = 9  # python/numpy assignment requires a list length of 9
+REQUIRED_INPUT_LEN = 9  # python/numpy assignment requires a list length of 9
+TEST_INPUT = [0, 1, 2, 3, 4, 5, 6, 7, 8]  # req'd by assigment
 
+def calculate(list):  # signature is fixed by assignment requirements
+    """Return important statistical data based on input in the form of a dictionary.
 
-def calculate(list):
-    """returns important statistical data based on input in the form of a dictionary"""
+    Input is converted to a 3x3 numpy matrix and sum,
 
-    """function that uses numpy to output the mean, variance, standard deviation, max, min, and sum of the rows,
-    columns, and elements in a 3 x 3 matrix."""
+    Args:
+        list (list): Input to calculate statistical parameters on.
+
+    Return:
+        calculations (dict): map of
+
+    Output:
+    This fn outputs the mean, variance, standard deviation, max, min, and sum of the rows, columns, and elements in a
+    3 x 3 matrix.
+
+    >>> pprint(calculate([0, 1, 2, 3, 4, 5, 6, 7, 8]))
+    {'max': [[6, 7, 8], [2, 5, 8], 8],
+     'mean': [[3.0, 4.0, 5.0], [1.0, 4.0, 7.0], 4.0],
+     'min': [[0, 1, 2], [0, 3, 6], 0],
+     'standard deviation': [[2.449489742783178,
+                             2.449489742783178,
+                             2.449489742783178],
+                            [0.816496580927726,
+                             0.816496580927726,
+                             0.816496580927726],
+                            2.581988897471611],
+     'sum': [[9, 12, 15], [3, 12, 21], 36],
+     'variance': [[6.0, 6.0, 6.0],
+                  [0.6666666666666666, 0.6666666666666666, 0.6666666666666666],
+                  6.666666666666667]}
+    """
+
+    # Exit early if assignment requirments not met
+    if len(list) != REQUIRED_INPUT_LEN:
+        raise ValueError('List must contain nine numbers.')  # assignment requires this string
+
+    # Transform list into intermediate matrix
+    matrix = np.asarray(list).reshape(3, 3)  # converts the input list into a 3x3 array
 
     calculations = {}
+    calculations['sum'] = matrix_sum(matrix)
+    calculations['mean'] = matrix_mean(matrix)
+    calculations['min'] = matrix_min(matrix)
+    calculations['max'] = matrix_max(matrix)
+    calculations['variance'] = matrix_variances(matrix)
+    calculations['standard deviation'] = matrix_deviations(matrix)
 
-    if len(list) != lst_len:
-        raise ValueError(f'List must contain {lst_len} numbers.')
-
-    list_array = np.asarray(list).reshape(3, 3)  # converts the input list into a 3x3 array
-
-    calculations['sum'] = a_sum(list_array)
-    calculations['mean'] = a_mean(list_array)
-    calculations['min'] = a_min(list_array)
-    calculations['max'] = a_max(list_array)
-    calculations['variance'] = a_variance(list_array)
-    calculations['standard deviation'] = a_deviation(list_array)
-
-    print(calculations)
     return calculations
 
 
-def a_deviation(array):
-    """returns the deviation values of the input array"""
+def matrix_deviations(square_matrix):
+    """Returns the deviation values of the input array.
 
-    axis_0_deviation = np.std(array, axis=0)
-    axis_1_deviation = np.std(array, axis=1)
-    total_deviation = np.std(array)
-    # returns list of the deviation values
-    return [axis_0_deviation.tolist(), axis_1_deviation.tolist(), total_deviation.tolist()]
+    Args:
+        square_matrix (numpy.ndarray): an array representing a square matrix
+
+    Return:
+        deviations (list of lists): element0: deviation of axis0
+                                    element1: deviation of axis1
+                                    element2: deviation of whole matrix
+    """
+
+    # Calculate the deviations for the input
+    axis_0_deviation = np.std(square_matrix, axis=0)
+    axis_1_deviation = np.std(square_matrix, axis=1)
+    total_deviation = np.std(square_matrix)
+    deviations = [axis_0_deviation.tolist(), axis_1_deviation.tolist(), total_deviation.tolist()]
+
+    return deviations
 
 
-def a_variance(array):
-    """returns the variance values of the input array"""
+def matrix_variances(square_matrix):
+    """Returns the variance values of the input array.
 
-    axis_0_variance = np.var(array, axis=0)
-    axis_1_variance = np.var(array, axis=1)
-    total_variance = np.var(array)
-    # returns list of the variance values
+    Args:
+        square_matrix (numpy.ndarray): an array representing a square matrix
+
+    Return:
+        variances (list of lists): element0: variances of axis0
+                                    element1: variances of axis1
+                                    element2: variances of whole matrix
+    """
+
+    axis_0_variance = np.var(square_matrix, axis=0)
+    axis_1_variance = np.var(square_matrix, axis=1)
+    total_variance = np.var(square_matrix)
+
     return [axis_0_variance.tolist(), axis_1_variance.tolist(), total_variance.tolist()]
 
 
-def a_max(array):
-    """returns the max values of the input array"""
+def matrix_max(array):
+    """Returns the max values of the input array.
+
+    Args:
+        square_matrix (numpy.ndarray): an array representing a square matrix
+
+    Return:
+        max (list of lists): element0: max of axis0
+                                    element1: max of axis1
+                                    element2: max of whole matrix
+    """
 
     axis_0_max = np.max(array, axis=0)
     axis_1_max = np.max(array, axis=1)
     total_max = np.max(array)
-    return [axis_0_max.tolist(), axis_1_max.tolist(), total_max.tolist()]  # returns list of the max values
+
+    return [axis_0_max.tolist(), axis_1_max.tolist(), total_max.tolist()]
 
 
-def a_sum(array):
-    """returns the sum values the input array"""
+def matrix_sum(matrix):
+    """Returns the sum values of the input array.
 
-    axis_0_sum = np.sum(array, axis=0)
-    axis_1_sum = np.sum(array, axis=1)
-    total_sum = np.sum(array)
+    Args:
+        square_matrix (numpy.ndarray): an array representing a square matrix
+
+    Return:
+        sum (list of lists): element0: sum of axis0
+                                    element1: sum of axis1
+                                    element2: sum of whole matrix
+    """
+
+    axis_0_sum = np.sum(matrix, axis=0)
+    axis_1_sum = np.sum(matrix, axis=1)
+    total_sum = np.sum(matrix)
+
     return [axis_0_sum.tolist(), axis_1_sum.tolist(), total_sum.tolist()]  # returns list of sum values
 
 
-def a_mean(array):
-    """returns the mean values for the input array"""
+def matrix_mean(array):
+    """Returns the mean values of the input array.
+
+    Args:
+        square_matrix (numpy.ndarray): an array representing a square matrix
+
+    Return:
+        mean (list of lists): element0: mean of axis0
+                                    element1: mean of axis1
+                                    element2: mean of whole matrix
+    """
 
     axis_0_mean = np.mean(array, axis=0)
     axis_1_mean = np.mean(array, axis=1)
     total_mean = np.mean(array)
+
     return [axis_0_mean.tolist(), axis_1_mean.tolist(), total_mean.tolist()]  # returns list of mean values
 
 
-def a_min(array):
-    """returns the min values for the input array"""
+def matrix_min(array):
+    """Returns the min values of the input array.
+
+    Args:
+        square_matrix (numpy.ndarray): an array representing a square matrix
+
+    Return:
+        min (list of lists): element0: min of axis0
+                                    element1: min of axis1
+                                    element2: min of whole matrix
+    """
 
     axis_0_min = np.min(array, axis=0)
     axis_1_min = np.min(array, axis=1)
     total_min = np.min(array)
-    return [axis_0_min.tolist(), axis_1_min.tolist(), total_min.tolist()]  # returns list of min values
+
+    return [axis_0_min.tolist(), axis_1_min.tolist(), total_min.tolist()]
 
 
 if __name__ == '__main__':
-    calculate([0, 1, 2, 3, 4, 5, 6, 7, 8])
+    import doctest
+    doctest.testmod()
