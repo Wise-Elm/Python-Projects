@@ -67,4 +67,5 @@ def draw_plot():
     return plt.gca()
 
 
-draw_plot()
+if __name__ == '__main__':
+    draw_plot()
